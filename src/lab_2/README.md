@@ -1,21 +1,26 @@
 # im_lab_work
 Lab work 2 for IM
 
-[Path to output data](../../data/lab_2/output)
+- [Utils file](utils.py)
+- [Main file](main.py)
 
-[Main file](main.py)
+___
 
-Uniform Numbers:
-![solution](../../data/lab_2/output/uniform_numbers.png)
+- [Path to output data](../../data/lab_2/output)
 
-Normal Numbers:
-![result](../../data/lab_2/output/normal_numbers.png)
+___
 
-Mean And Variance::
-![histogram](../../data/lab_2/output/mean_variance.png)
+- [100 passers-by results](../../data/lab_2/output/100_results.html)
+- [1000 passers-by results](../../data/lab_2/output/1000_results.html)
+- [10000 passers-by results](../../data/lab_2/output/10000_results.html)
 
-Tests Results:
-![convergence](../../data/lab_2/output/tests_results.png)
+## Formal System Model
+|                        Time Allocation                        |                    Duration Allocation                     |
+|:-------------------------------------------------------------:|:----------------------------------------------------------:|
+| ![TimeAllocation](../../data/lab_2/output/TimeAllocation.png) | ![reduced](../../data/lab_2/output/DurationAllocation.png) |
 
-Empirical vs Theoretical fit:
-![convergence](../../data/lab_2/output/normal_fit.png)
+Simulation Results:
+![SimulationResults](../../data/lab_2/output/SimulationResults.png)
+
+Passers By Dependency:
+![PassersByDependency](../../data/lab_2/output/PassersByDependency.png)

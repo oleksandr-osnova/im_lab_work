@@ -7,8 +7,7 @@ import plotly.io as pio
 
 # Root variables
 dataset_folder = pathlib.Path('../../data/lab_2')
-input_dataset_folder = dataset_folder / "input"
-output_dataset_folder = dataset_folder / "output"
+output_data_folder = dataset_folder / "output"
 
 # Явно задані діапазони для X1, X2, X3
 x1_ranges = [(0, 24, 0), (25, 59, 1), (60, 77, 2), (78, 87, 3), (88, 95, 4), (96, 99, 5)]
@@ -69,7 +68,7 @@ def analyze(passers_by_count = 100):
     return list(range(1, passers_by_count + 1)), random_numbers_x1, time_intervals, arrival_times, random_numbers_x2, agreement_status, random_numbers_x3, durations, start_times, end_times
 
 def save_table(table, title = "table", annotation = None):
-    file_name = output_dataset_folder / (title + ".html")
+    file_name = output_data_folder / (title + ".html")
     fig = go.Figure(data=[go.Table(
         header=dict(
             values=list(table.columns),
@@ -123,19 +122,23 @@ def save_analyzed_table(passers_by_indexes, random_numbers_x1, time_intervals, a
     ))
 
 def show_formal_system_model(passers_by_indexes, random_numbers_x1, time_intervals, arrival_times, random_numbers_x2, agreement_status, random_numbers_x3, durations, start_times, end_times):
+    fig_time_allocation = plt.figure('TimeAllocation')
     plt.hist(time_intervals, bins=range(max(time_intervals)+1), alpha=0.7, color='skyblue', edgecolor='black')
     plt.title("Розподіл часу між появами перехожих (X₁) -> Приклад формальної системи моделі")
     plt.xlabel("Час між появами (хвилини)")
     plt.ylabel("Кількість перехожих")
     plt.grid(True)
     plt.show()
+    fig_time_allocation.savefig(output_data_folder / 'TimeAllocation.png')
 
+    fig_duration_allocation = plt.figure('DurationAllocation')
     plt.hist(durations, bins=range(min(durations), max(durations)+2), alpha=0.7, color='green', edgecolor='black')
     plt.title("Розподіл тривалості інтерв'ю (X₃) -> Приклад формальної системи моделі")
     plt.xlabel("Тривалість інтерв'ю (хвилини)")
     plt.ylabel("Кількість інтерв'ю")
     plt.grid(True)
     plt.show()
+    fig_duration_allocation.savefig(output_data_folder / 'DurationAllocation.png')
 
 def show_simulation_results(passers_by_indexes, random_numbers_x1, time_intervals, arrival_times, random_numbers_x2, agreement_status, random_numbers_x3, durations, start_times, end_times):
     # Розрахунок загальної тривалості та вартості
@@ -151,7 +154,7 @@ def show_simulation_results(passers_by_indexes, random_numbers_x1, time_interval
     print(f"Загальна вартість анкетування: {total_cost} грн")
 
     # Візуалізація результатів
-    plt.figure(figsize=(10, 6))
+    fig_simulation_results = plt.figure('SimulationResults', figsize=(10, 6))
 
     for i in range(len(passers_by_indexes)):
         if start_times[i] is not None:
@@ -162,6 +165,7 @@ def show_simulation_results(passers_by_indexes, random_numbers_x1, time_interval
     plt.ylabel("Перехожі")
     plt.grid(True)
     plt.show()
+    fig_simulation_results.savefig(output_data_folder / 'SimulationResults.png')
 
 
 def show_passers_by_dependency():
@@ -173,10 +177,12 @@ def show_passers_by_dependency():
         total_time = sum([end - start for start, end in zip(start_times, end_times) if start is not None])
         total_times.append(total_time)
 
+    fig_passers_by_dependency = plt.figure('PassersByDependency')
     plt.plot(passers_by_cunts, total_times, marker='o', linestyle='-')
     plt.title("Залежність загального часу від кількості перехожих")
     plt.xlabel("Кількість перехожих")
     plt.ylabel("Загальний час анкетування (хвилини)")
     plt.grid(True)
     plt.show()
+    fig_passers_by_dependency.savefig(output_data_folder / 'PassersByDependency.png')
 
