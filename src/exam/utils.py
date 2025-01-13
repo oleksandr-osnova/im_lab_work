@@ -11,7 +11,7 @@ output_data_folder = dataset_folder / "output"
 
 # Явно задані діапазони для X1, X2, X3
 x1_ranges = [(0, 32, 5), (33, 66, 10), (67, 99, 15)]
-x2_ranges = [(0, 74, "Yes"), (75, 99, "No")]
+x2_ranges = [(0, 49, "Yes"), (50, 99, "No")]
 x3_ranges = [(0, 32, 1), (33, 66, 4), (67, 99, 7)]
 
 # Функція для генерації випадкових чисел експоненціального розподілу
@@ -160,7 +160,7 @@ def show_simulation_results(passers_by_indexes, random_numbers_x1, time_interval
         if start_times[i] is not None:
             plt.hlines(i + 1, start_times[i], end_times[i], colors='blue', linewidth=5)
 
-    plt.title(f"Временная шкала анкетирования\nЗагальна тривалість: {total_interview_time} хвилин, Загальна вартість: {total_cost} грн")
+    plt.title(f"Временная шкала анкетирования\nЗагальна тривалість: {total_interview_time} хвилин, вартість хвилини {cost_per_minute} грн, Загальна вартість: {total_cost} грн")
     plt.xlabel("Час (хвилини)")
     plt.ylabel("Перехожі")
     plt.grid(True)
@@ -168,13 +168,13 @@ def show_simulation_results(passers_by_indexes, random_numbers_x1, time_interval
     fig_simulation_results.savefig(output_data_folder / 'SimulationResults.png')
 
 
-def show_passers_by_dependency():
-    passers_by_cunts = range(10, 101, 10)
+def show_passers_by_dependency(passers_by_cunt = 100):
+    passers_by_cunts = range(passers_by_cunt // 10, passers_by_cunt + 1, passers_by_cunt // 10)
+    _, _, _, _, _, _, _, _, start_times, end_times = analyze(passers_by_cunt)
     total_times = []
 
     for count in passers_by_cunts:
-        _, _, _, _, _, _, _, _, start_times, end_times = analyze(count)
-        total_time = sum([end - start for start, end in zip(start_times, end_times) if start is not None])
+        total_time = sum([end - start for start, end in zip(start_times[:count], end_times[:count]) if start is not None])
         total_times.append(total_time)
 
     fig_passers_by_dependency = plt.figure('PassersByDependency')
